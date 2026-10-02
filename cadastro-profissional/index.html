@@ -4,11 +4,12 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cadastro de Profissional — SERVIX</title>
+<meta name="description" content="Cadastre-se como profissional na SERVIX." />
 <link rel="icon" type="image/png" href="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
@@ -17,7 +18,7 @@
     <img src="https://i.postimg.cc/QxPKh1kx/83fb69c1-108b-4dad-8e00-5b7ead62e1db.png" alt="SERVIX" />
     <span>SERVIX</span>
   </a>
-  <span class="site-tag">Cadastro de Profissional</span>
+  <span class="tag">Cadastro de Profissional</span>
 </header>
 
 <main class="main">
@@ -28,140 +29,138 @@
     <p>Preencha o formulário para receber solicitações de serviços na sua região.</p>
   </section>
 
-  <section class="form-wrap">
-    <div class="card">
-      <div id="alerta" class="alerta" style="display: none;"></div>
+  <div class="card">
+    <div id="alerta" class="alerta" style="display: none;"></div>
 
-      <form id="form" novalidate>
+    <form id="form" novalidate>
 
-        <h2 class="section-title"><span class="num">1</span> Dados pessoais</h2>
+      <h2 class="section-title"><span class="num">1</span> Dados pessoais</h2>
 
+      <div class="field">
+        <label>Nome completo <span class="req">*</span></label>
+        <input type="text" name="nome" required />
+        <small class="err"></small>
+      </div>
+
+      <div class="grid-2">
         <div class="field">
-          <label>Nome completo <span class="req">*</span></label>
-          <input type="text" name="nome" required />
+          <label>E-mail <span class="req">*</span></label>
+          <input type="email" name="email" required />
           <small class="err"></small>
         </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label>E-mail <span class="req">*</span></label>
-            <input type="email" name="email" required />
-            <small class="err"></small>
-          </div>
-          <div class="field">
-            <label>Telefone / WhatsApp <span class="req">*</span></label>
-            <input type="tel" name="telefone" required />
-            <small class="err"></small>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label>Senha <span class="req">*</span></label>
-            <input type="password" name="senha" required minlength="6" />
-            <small class="err"></small>
-          </div>
-          <div class="field">
-            <label>Confirmar senha <span class="req">*</span></label>
-            <input type="password" name="senhaConfirm" required />
-            <small class="err"></small>
-          </div>
-        </div>
-
         <div class="field">
-          <label>CPF (opcional)</label>
-          <input type="text" name="cpf" maxlength="14" />
-        </div>
-
-        <h2 class="section-title"><span class="num">2</span> Localização</h2>
-
-        <div class="grid-2">
-          <div class="field">
-            <label>Cidade <span class="req">*</span></label>
-            <input type="text" name="cidade" required />
-            <small class="err"></small>
-          </div>
-          <div class="field">
-            <label>Estado <span class="req">*</span></label>
-            <select name="estado" required>
-              <option value="">Selecione</option>
-              <option value="AC">Acre</option><option value="AL">Alagoas</option>
-              <option value="AP">Amapá</option><option value="AM">Amazonas</option>
-              <option value="BA">Bahia</option><option value="CE">Ceará</option>
-              <option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option>
-              <option value="GO">Goiás</option><option value="MA">Maranhão</option>
-              <option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option>
-              <option value="MG">Minas Gerais</option><option value="PA">Pará</option>
-              <option value="PB">Paraíba</option><option value="PR">Paraná</option>
-              <option value="PE">Pernambuco</option><option value="PI">Piauí</option>
-              <option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option>
-              <option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option>
-              <option value="RR">Roraima</option><option value="SC">Santa Catarina</option>
-              <option value="SP">São Paulo</option><option value="SE">Sergipe</option>
-              <option value="TO">Tocantins</option>
-            </select>
-            <small class="err"></small>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="field">
-            <label>Bairro</label>
-            <input type="text" name="bairro" />
-          </div>
-          <div class="field">
-            <label>CEP</label>
-            <input type="text" name="cep" maxlength="9" />
-          </div>
-        </div>
-
-        <h2 class="section-title"><span class="num">3</span> Áreas de atuação</h2>
-
-        <div class="field">
-          <label>Categorias <span class="req">*</span></label>
-          <p class="hint">Selecione uma ou mais áreas</p>
-          <div class="categorias" id="categorias"></div>
+          <label>Telefone / WhatsApp <span class="req">*</span></label>
+          <input type="tel" name="telefone" required />
           <small class="err"></small>
         </div>
+      </div>
 
-        <h2 class="section-title"><span class="num">4</span> Experiência</h2>
-
-        <div class="grid-2">
-          <div class="field">
-            <label>Anos de experiência</label>
-            <input type="number" name="experienciaAnos" min="0" max="70" value="0" />
-          </div>
-          <div class="field">
-            <label>Disponibilidade</label>
-            <select name="disponibilidade">
-              <option value="flexivel">Flexível</option>
-              <option value="integral">Integral</option>
-              <option value="meio-periodo">Meio período</option>
-              <option value="fins-de-semana">Fins de semana</option>
-            </select>
-          </div>
-        </div>
-
+      <div class="grid-2">
         <div class="field">
-          <label>Sobre você / Seus serviços</label>
-          <textarea name="descricao" rows="5" maxlength="1000"></textarea>
-        </div>
-
-        <div class="termos">
-          <label>
-            <input type="checkbox" name="termos" />
-            Concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a>
-          </label>
+          <label>Senha <span class="req">*</span></label>
+          <input type="password" name="senha" required minlength="6" />
           <small class="err"></small>
         </div>
+        <div class="field">
+          <label>Confirmar senha <span class="req">*</span></label>
+          <input type="password" name="senhaConfirm" required />
+          <small class="err"></small>
+        </div>
+      </div>
 
-        <button type="submit" class="btn" id="btn">
-          <span class="btn-text">Criar minha conta de profissional</span>
-          <span class="spinner"></span>
-        </button>
-      </form>
-    </div>
-  </section>
+      <div class="field">
+        <label>CPF (opcional)</label>
+        <input type="text" name="cpf" maxlength="14" />
+      </div>
+
+      <h2 class="section-title"><span class="num">2</span> Localização</h2>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Cidade <span class="req">*</span></label>
+          <input type="text" name="cidade" required />
+          <small class="err"></small>
+        </div>
+        <div class="field">
+          <label>Estado <span class="req">*</span></label>
+          <select name="estado" required>
+            <option value="">Selecione</option>
+            <option value="AC">Acre</option><option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option><option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option><option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option><option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option><option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option><option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option><option value="PA">Pará</option>
+            <option value="PB">Paraíba</option><option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option><option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option><option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option><option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option><option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option><option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+          </select>
+          <small class="err"></small>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Bairro</label>
+          <input type="text" name="bairro" />
+        </div>
+        <div class="field">
+          <label>CEP</label>
+          <input type="text" name="cep" maxlength="9" />
+        </div>
+      </div>
+
+      <h2 class="section-title"><span class="num">3</span> Áreas de atuação</h2>
+
+      <div class="field">
+        <label>Categorias <span class="req">*</span></label>
+        <p class="hint">Selecione uma ou mais áreas em que você atua</p>
+        <div class="categorias" id="categorias"></div>
+        <small class="err"></small>
+      </div>
+
+      <h2 class="section-title"><span class="num">4</span> Experiência</h2>
+
+      <div class="grid-2">
+        <div class="field">
+          <label>Anos de experiência</label>
+          <input type="number" name="experienciaAnos" min="0" max="70" value="0" />
+        </div>
+        <div class="field">
+          <label>Disponibilidade</label>
+          <select name="disponibilidade">
+            <option value="flexivel">Flexível</option>
+            <option value="integral">Integral</option>
+            <option value="meio-periodo">Meio período</option>
+            <option value="fins-de-semana">Fins de semana</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Sobre você / Seus serviços</label>
+        <textarea name="descricao" rows="5" maxlength="1000" placeholder="Conte um pouco sobre sua experiência e o que você oferece."></textarea>
+      </div>
+
+      <div class="termos">
+        <label>
+          <input type="checkbox" name="termos" />
+          <span>Concordo com os <a href="#">Termos de Uso</a> e a <a href="#">Política de Privacidade</a></span>
+        </label>
+        <small class="err"></small>
+      </div>
+
+      <button type="submit" class="btn" id="btn">
+        <span class="btn-text">Criar minha conta de profissional</span>
+        <span class="spinner"></span>
+      </button>
+    </form>
+  </div>
 
 </main>
 
@@ -169,6 +168,6 @@
   <p>&copy; <span id="ano"></span> SERVIX — Cadastro de Profissional</p>
 </footer>
 
-<script src="js/app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
