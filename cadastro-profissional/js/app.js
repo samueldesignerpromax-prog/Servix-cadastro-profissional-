@@ -1,4 +1,4 @@
-// ===== CONFIG API =====
+/* ========== CONFIGURAÇÃO ========== */
 const API_URL = 'https://servix-api-1.onrender.com';
 const ENDPOINT = '/api/profissionais/cadastro';
 
@@ -24,14 +24,15 @@ const CATEGORIAS = [
   { v: 'outros', l: 'Outros' },
 ];
 
+/* ========== ELEMENTOS ========== */
 const form = document.getElementById('form');
 const btn = document.getElementById('btn');
 const alerta = document.getElementById('alerta');
 
-// ===== INIT =====
+/* ========== INIT ========== */
 document.getElementById('ano').textContent = new Date().getFullYear();
 
-// Categorias
+// Renderiza categorias
 document.getElementById('categorias').innerHTML = CATEGORIAS.map((c) => `
   <label class="cat">
     <input type="checkbox" name="categorias" value="${c.v}" />
@@ -45,11 +46,12 @@ aplicarMascara(form.telefone, 'telefone');
 aplicarMascara(form.cpf, 'cpf');
 aplicarMascara(form.cep, 'cep');
 
-// ===== MÁSCARAS =====
+/* ========== MÁSCARAS ========== */
 function aplicarMascara(input, tipo) {
   if (!input) return;
   input.addEventListener('input', (e) => {
     let v = e.target.value.replace(/\D/g, '');
+
     if (tipo === 'telefone') {
       v = v.slice(0, 11);
       if (v.length > 10) v = v.replace(/^(\d{2})(\d{5})(\d{4}).*/, '($1) $2-$3');
@@ -65,31 +67,37 @@ function aplicarMascara(input, tipo) {
       v = v.slice(0, 8);
       if (v.length > 5) v = v.replace(/^(\d{5})(\d{0,3})/, '$1-$2');
     }
+
     e.target.value = v;
   });
 }
 
-// ===== VALIDAÇÃO =====
+/* ========== VALIDAÇÃO ========== */
 function limparErros() {
   document.querySelectorAll('.field').forEach((f) => {
     f.classList.remove('has-err');
-    const i = f.querySelector('input,select,textarea');
+    const i = f.querySelector('input, select, textarea');
     if (i) i.classList.remove('err');
     const m = f.querySelector('.err');
     if (m) m.textContent = '';
   });
-  document.querySelectorAll('.termos .err').forEach((m) => { m.textContent = ''; m.style.display = 'none'; });
+  document.querySelectorAll('.termos .err').forEach((m) => {
+    m.textContent = '';
+    m.style.display = 'none';
+  });
 }
 
 function marcarErro(nome, msg) {
   const input = form.querySelector(`[name="${nome}"]`);
   if (!input) return;
   const field = input.closest('.field') || input.closest('.termos');
-  if (field) {
-    field.classList.add('has-err');
-    input.classList.add('err');
-    const m = field.querySelector('.err');
-    if (m) { m.textContent = msg; m.style.display = 'block'; }
+  if (!field) return;
+  field.classList.add('has-err');
+  input.classList.add('err');
+  const m = field.querySelector('.err');
+  if (m) {
+    m.textContent = msg;
+    m.style.display = 'block';
   }
 }
 
@@ -116,21 +124,13 @@ function validar() {
   if (dados.senha !== dados.senhaConfirm) erros.push(['senhaConfirm', 'As senhas não coincidem']);
   if (!dados.cidade) erros.push(['cidade', 'Informe sua cidade']);
   if (!dados.estado) erros.push(['estado', 'Selecione o estado']);
-  if (dados.categorias.length === 0) {
-    const field = document.querySelector('.field:has(.categorias)');
-    if (field) {
-      field.classList.add('has-err');
-      const m = field.querySelector('.err');
-      if (m) { m.textContent = 'Selecione ao menos uma categoria'; m.style.display = 'block'; }
-    }
-    erros.push(['categorias', '']);
-  }
+  if (dados.categorias.length === 0) erros.push(['categorias', 'Selecione ao menos uma categoria']);
   if (!dados.termos) erros.push(['termos', 'Você precisa aceitar os termos']);
 
   return { erros, dados };
 }
 
-// ===== SUBMIT =====
+/* ========== SUBMIT ========== */
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
   alerta.style.display = 'none';
@@ -138,9 +138,9 @@ form.addEventListener('submit', async (e) => {
   const { erros, dados } = validar();
 
   if (erros.length > 0) {
-    erros.forEach(([nome, msg]) => msg && marcarErro(nome, msg));
+    erros.forEach(([nome, msg]) => marcarErro(nome, msg));
     alerta.className = 'alerta alerta-erro';
-    alerta.textContent = `Corrija ${erros.length} campo(s).`;
+    alerta.textContent = `Corrija ${erros.length} campo(s) antes de continuar.`;
     alerta.style.display = 'flex';
     const primeiro = document.querySelector('.has-err');
     if (primeiro) primeiro.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -161,6 +161,7 @@ form.addEventListener('submit', async (e) => {
     disponibilidade: form.disponibilidade.value,
     descricao: form.descricao.value.trim(),
   };
+
   if (form.cpf.value.trim()) payload.cpf = form.cpf.value.trim();
 
   btn.classList.add('loading');
@@ -172,10 +173,10 @@ form.addEventListener('submit', async (e) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
+
     const json = await res.json();
 
     if (!res.ok) {
-      // Erros da API
       if (json.erros && Array.isArray(json.erros)) {
         json.erros.forEach((e) => marcarErro(e.campo, e.mensagem));
         alerta.className = 'alerta alerta-erro';
@@ -194,7 +195,7 @@ form.addEventListener('submit', async (e) => {
     alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
   } catch (err) {
     alerta.className = 'alerta alerta-erro';
-    alerta.textContent = err.message || 'Erro ao conectar. Tente novamente.';
+    alerta.textContent = err.message || 'Erro ao conectar com o servidor.';
     alerta.style.display = 'flex';
   } finally {
     btn.classList.remove('loading');
